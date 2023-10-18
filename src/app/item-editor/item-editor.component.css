@@ -1,0 +1,51 @@
+
+div.borderContainer{
+    width: 500px;
+    height: 80vh;
+}
+
+div.titleLine{
+    height: 10%;
+}
+
+.titleCheck{
+    /* height: 100%; */
+}
+
+.title{
+    height: 60%;
+    width: 80%;
+}
+
+#back{
+    margin: 10px;
+}
+
+.titleLine{
+    margin: 10px;
+
+}
+
+.textArea{
+    margin: 10px;
+    width: 100%;
+    height: auto;
+}
+
+.textArea textarea{
+    width: 100%;
+}
+
+.buttons{
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.buttons div{
+    /* width: 30%; */
+}
+
+.buttons button{
+}

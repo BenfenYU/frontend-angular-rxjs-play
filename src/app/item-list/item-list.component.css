@@ -1,0 +1,30 @@
+.blank_content_firstline{
+    height: 10px;
+}
+
+.item_list{
+    /* display: flex; */
+    /* justify-content: space-between; */
+    /* height: 60%; */
+    flex: 6;
+}
+
+
+.item_list .item{
+    border-bottom: solid;
+    border-bottom-color:rgb(237, 238, 238);
+    border-bottom-width: 1.5px;
+    padding-bottom: 3%;
+    padding-top: 3%;
+}
+
+.like{
+    /* display: inline; */
+    cursor: pointer;
+    font-size: 20px;
+    float: right;
+}
+
+.cs{
+    color: rgb(255, 85, 0);
+}

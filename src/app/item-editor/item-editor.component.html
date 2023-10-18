@@ -1,0 +1,41 @@
+
+<div class="borderContainer">
+    
+<a routerLink="">
+<div id="back">
+    Back to List
+</div>
+</a>
+
+<div class="titleLine">
+
+    <span>  <input class="titleCheck" type="checkbox" [(ngModel)]="item.done">
+
+    <input class="title" [(ngModel)]="item.title">
+
+    <span [id]="item.id" class="like" *ngIf="item.favorite" (click)="modifyLike($event)">★</span>
+    <span [id]="item.id" class="like" *ngIf="!item.favorite" (click)="modifyLike($event)">☆</span>
+    </span>     
+
+</div>
+
+<div class="textArea">
+    <textarea [(ngModel)]="item.description" rows="10"></textarea>
+</div>
+
+<div class="buttons">
+    <div>
+    <a routerLink="/pagemain">
+    <button (click)="deleteItem()">Delete</button>
+    </a>    
+    </div>
+
+    <div>
+        <a routerLink="/pagemain">
+
+    <button (click)="saveItem()">Save</button>
+        </a>
+    </div>
+</div>
+
+</div> 

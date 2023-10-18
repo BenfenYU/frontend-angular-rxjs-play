@@ -1,0 +1,34 @@
+
+<body>
+<h1>
+        Todo List
+</h1>
+
+<div class="searchBlock">
+    <app-search (newItemEvent)="searchStr($event)"></app-search>
+    <app-reload-button (reloadEvent)="reload()"></app-reload-button>
+</div>
+
+<div class="buttons">
+    <div>
+        <button (click)="sortByDescription()">Sort by Description</button>
+    </div>
+    <div>
+        <button (click)="sortByTime()">Sort by Created Time</button>
+    </div>
+    <div>
+        <button (click)="hideDone()">Hide Done</button>
+    </div>
+</div>
+    
+<app-item-list [itemListPartial]="itemListPartial" >
+
+</app-item-list>
+
+<div class="create">
+    <a routerLink="/editor">
+        <button class="create_button">Create Item</button>
+    </a>
+</div>
+
+</body>
