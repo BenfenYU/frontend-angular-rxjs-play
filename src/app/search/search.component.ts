@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-search',
@@ -6,6 +6,7 @@ import { Component, EventEmitter, Output, SimpleChanges } from '@angular/core';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent {
+  @Input()
   searchStr: string | undefined;
 
   @Output() 
@@ -15,8 +16,4 @@ export class SearchComponent {
     this.newItemEvent.emit(this.searchStr);
   }
 
-  reload(){
-    this.searchStr = '';
-    this.newItemEvent.emit('');
-  }
 }

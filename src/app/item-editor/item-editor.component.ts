@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ItemDto } from '../Dtos/dbDto';
 import { ItemRepositoryLocal } from '../services/item-repository.service';
 import { ItemRepositoryWebApiService } from '../services/item-repository-web-api.service';
+import { ToDoListService } from '../services/to-do-list.service';
 
 @Component({
   selector: 'app-item-editor',
@@ -17,7 +18,7 @@ export class ItemEditorComponent {
   @Output()
   updateEvent = new EventEmitter<boolean>();
 
-  constructor(private route: ActivatedRoute, private itemRepository: ItemRepositoryWebApiService){
+  constructor(private route: ActivatedRoute, private toDoListService: ToDoListService){
   }
 
   ngOnInit(){
@@ -31,14 +32,14 @@ export class ItemEditorComponent {
 
   saveItem(){
     if (!this.isNew){
-      this.itemRepository.updateItem(this.item.id,this.item).subscribe();
+      this.toDoListService.updateItem(this.item.id,this.item);
     }else{
-      this.itemRepository.CreateItem(this.item).subscribe();
+      this.toDoListService.createItem(this.item);
     }
   }
 
   deleteItem(){
-    this.itemRepository.DeleteItem(this.item.id).subscribe();
+    this.toDoListService.deleteItem(this.item.id);
   }
 
   getNewItem(): ItemDto{
@@ -59,7 +60,10 @@ export class ItemEditorComponent {
     if (idStr != null){
     {
       this.isNew = false;
-      this.itemRepository.getItemById(idStr).subscribe(item => this.item = item);
+      let _item = this.toDoListService.getItemById(idStr);
+      if (_item){
+        this.item = {..._item};
+      }
     }
   }
 }

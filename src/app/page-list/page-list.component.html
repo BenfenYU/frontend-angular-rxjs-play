@@ -1,11 +1,10 @@
 
-<body>
 <h1>
         Todo List
 </h1>
 
 <div class="searchBlock">
-    <app-search (newItemEvent)="searchStr($event)"></app-search>
+    <app-search (newItemEvent)="searchStr($event)" [searchStr]="inputStr"></app-search>
     <app-reload-button (reloadEvent)="reload()"></app-reload-button>
 </div>
 
@@ -21,14 +20,28 @@
     </div>
 </div>
     
-<app-item-list [itemListPartial]="itemListPartial" >
+<div class="blank_content_firstline">
+</div>
 
-</app-item-list>
+<div class="item_list">
+
+    <div class="item" *ngFor="let item of itemObserve | async">
+        <a routerLink="/editor/{{item.id}}">
+        <app-item-list 
+        [id]="item.id" [title]="item.title" [done]="item.done" [favorite]="item.favorite"
+        (doneEvent)="catchDoneEvent($event)"
+        (likeEvent)="catchLikeEvent($event)"
+        ></app-item-list>
+        </a>
+    </div>  
+</div>  
+
+<!-- <app-item-list [itemListPartial]="itemListPartial" [itemToDoList]="itemObserve">
+
+</app-item-list> -->
 
 <div class="create">
     <a routerLink="/editor">
         <button class="create_button">Create Item</button>
     </a>
 </div>
-
-</body>

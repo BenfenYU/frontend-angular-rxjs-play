@@ -1,33 +1,23 @@
-<div class="blank_content_firstline">
-</div>
+<!-- <div class="blank_content_firstline"> -->
+<!-- </div> -->
 
-<div class="item_list">
-    <div class="item" *ngFor="let item of itemListPartial">
+<!-- <div class="item_list"> -->
+    <!-- <div class="item" *ngFor="let item of itemToDoList | async"> -->
         <span>
-            <input type="checkbox" [id]="item.id" [(ngModel)]="item.done" (change)="modifyCheck($event)">
+            <input type="checkbox" [id]="id" [checked]="done" (change)="modifyCheck($event)">
         </span>
 
-        <a routerLink="/editor/{{item.id}}">
+        <!-- <a routerLink="/editor/{{item.id}}"> -->
         
         <span>
-            <label for="scales" class="item_content">{{item.title}}</label>
+            <label for="scales" class="item_content">{{title}}</label>
         </span>
 
         <span class="blank_content"></span>
 
-        </a>    
+        <!-- </a>     -->
 
-        <span [id]="item.id" class="like" *ngIf="item.favorite" (click)="modifyLike($event)">★</span>
-        <span [id]="item.id" class="like" *ngIf="!item.favorite" (click)="modifyLike($event)">☆</span>
-    </div>
-</div>
-
-<script typet="text/javascript" src="http://libs.baidu.com/jquery/0.9.1/jquery.min.js"></script>
-
-<script>
-            $(function () {            
-                $(".like").click(function () {
-                    $(this).toggleClass('cs');                
-                })
-            })
-</script>
+        <span [id]=0 class="like" *ngIf="favorite" (click)="modifyLike($event)">★</span>
+        <span [id]=1 class="like" *ngIf="!favorite" (click)="modifyLike($event)">☆</span>
+    <!-- </div> -->
+<!-- </div> -->

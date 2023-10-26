@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { ItemDto } from '../Dtos/dbDto';
 import { ItemRepositoryLocal } from '../services/item-repository.service';
 import { ItemRepositoryWebApiService } from '../services/item-repository-web-api.service';
+import { Observable, tap } from 'rxjs';
+import { ToDoListService } from '../services/to-do-list.service';
+import { ItemEventObj } from '../item-list/item-list.component';
 
 @Component({
   selector: 'app-page-list',
@@ -10,52 +13,64 @@ import { ItemRepositoryWebApiService } from '../services/item-repository-web-api
 })
 export class PageListComponent {
 
-  itemList?: ItemDto[];
-  itemListPartial?: ItemDto[];
+  itemList: ItemDto[] | undefined;
+  itemListPartial: ItemDto[] | undefined;
 
-  constructor(private itemRepository: ItemRepositoryWebApiService){}
+  itemObserve: Observable<ItemDto[]> | undefined;
+
+  inputStr: string = "";
+
+  constructor(
+    private toDoListService: ToDoListService
+    ){}
 
   ngOnInit(){
-    this.reload(); 
+    this.refresh()
+  }
+
+  refresh(){
+    this.itemObserve = this.toDoListService.getAllItems();
   }
 
   reload(){
-    this.itemRepository.getItems().subscribe(
-      items => 
-      {
-        this.itemList = items;
-        this.itemListPartial = this.itemList;
-      }
-      );
+    this.toDoListService.reload();
+    this.inputStr = "";
   }
 
   searchStr(searchText: string){
-    if (searchText == undefined || this.itemList == undefined){
-      return;
-    }
-    if (searchText === ''){
-      this.itemListPartial = this.itemList;
-      return;
-    }
-    this.itemListPartial = this.itemList.filter((e,i,a) => 
-    {
-      let isOk = e.title.includes(searchText);
-      return isOk;
-    });
+    this.inputStr = searchText;
+    this.toDoListService.searchStr(searchText);
   }
 
   sortByDescription(){
-    this.itemListPartial = this.itemList;
-    this.itemListPartial = this.itemListPartial?.sort((a,b) => (a.description > b.description ? -1: 1));
+    this.toDoListService.sortByDescription();
   }
 
   sortByTime(){
-    this.itemListPartial = this.itemList;
-    this.itemListPartial = this.itemListPartial?.sort((a,b) => (a.createdTime > b.createdTime ? -1: 1));
+    this.toDoListService.sortByTime();
   }
 
   hideDone(){
-    this.itemListPartial = this.itemList;
-    this.itemListPartial = this.itemListPartial?.filter((e,i,a) => !e.done);
+    this.toDoListService.hideDone();
+  }
+
+  catchDoneEvent(event: ItemEventObj){
+    let item = this.toDoListService.getItemById(event.id);
+    if (item === undefined){
+      return;
+    }
+    item = {...item};
+    item.done = event.checked;
+    this.toDoListService.updateItem(event.id, item);
+  }
+
+  catchLikeEvent(event: ItemEventObj){
+    let item = this.toDoListService.getItemById(event.id);
+    if (item === undefined){
+      return;
+    }
+    item = {...item};
+    item.favorite = event.checked;
+    this.toDoListService.updateItem(event.id, item);
   }
 }
